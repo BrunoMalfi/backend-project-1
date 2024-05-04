@@ -17,3 +17,4 @@ app.listen(PORT, () => console.log('Servidor levantado en el puerto ' + PORT))
 //sequelize model:generate --name OrderProduct --attributes OrderId:integer,ProductId:integer
 //sequelize model:generate --name Token --attributes token:string,UserId:integer
 //sequelize db:migrate
+//sequelize seed:generate --name demo-product
