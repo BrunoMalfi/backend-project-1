@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { typeError } = require('./middleware/errors.js');
 const PORT = 3000
 
 app.use(express.json())
@@ -9,7 +10,9 @@ app.use('/categories', require('./routes/categories.js'));
 app.use('/users', require('./routes/users.js'));
 app.use('/orders', require('./routes/orders.js'));
 
-app.listen(PORT, () => console.log('Servidor levantado en el puerto ' + PORT))
+app.use(typeError)
+
+app.listen(PORT, () => console.log('Running server on port : ' + PORT))
 
 
 //sequelize model:generate --name User --attributes name:string,eMail:string,password:string
