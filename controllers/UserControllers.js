@@ -41,6 +41,23 @@ const UserController = {
             .then(user => res.status(201).send({ message: 'User :  ', user }))
             .catch(err =>console.error(err))
     },
+    logout(req, res) {
+        Token.destroy({
+            where: {
+                [Op.and]: [
+                    { UserId: req.params.id },
+                    { token: req.headers.authorization }
+                ]
+            }
+        })
+        .then(user => res.send({ message: 'Succesful logout '}))
+        .catch(err =>{
+            console.error(err)
+            res.status(500).send({ message: 'There was a problen logging out' })
+
+        })
+
+    }
 
 }
 
