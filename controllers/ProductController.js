@@ -3,10 +3,16 @@ const { Op } = Sequelize;
 
 const ProductController = {
     create(req, res) {
-        Product.create(req.body)
+        const file = req.file; 
+        //TODO : check if there's better solution about this . 
+        if(req.body.body != undefined ){
+            console.log(JSON.parse(req.body.body))
+            req.body = JSON.parse(req.body.body)
+        }
+        Product.create({...req.body,image_path:file.path})
             .then(product => {
                 product.addCategory(req.body.CategoryId)
-                res.status(201).send({ message: 'Successful product created ', product })
+                res.status(201).send({ message: 'Successful product created ', product ,file })
             })
             .catch(err =>console.error(err))
     },

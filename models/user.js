@@ -50,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Please fulfil the name field, it can't be empty",
         }
       },
-    }
+    },
+    role: {type: DataTypes.STRING}
   }, {
     sequelize,
     modelName: 'User',

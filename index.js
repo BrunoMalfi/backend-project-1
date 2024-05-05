@@ -12,7 +12,7 @@ app.use('/orders', require('./routes/orders.js'));
 
 app.use(typeError)
 
-app.listen(PORT, () => console.log('Running server on port : ' + PORT))
+app.listen(PORT, () => console.log('Listening  on port : ' + PORT))
 
 
 //sequelize model:generate --name User --attributes name:string,eMail:string,password:string
@@ -21,3 +21,5 @@ app.listen(PORT, () => console.log('Running server on port : ' + PORT))
 //sequelize model:generate --name Token --attributes token:string,UserId:integer
 //sequelize db:migrate
 //sequelize seed:generate --name demo-product
+//sequelize migration:create --name updatesInUserTable
+//npm i multer 
