@@ -9,6 +9,7 @@ app.use('/products', require('./routes/products.js'));
 app.use('/categories', require('./routes/categories.js'));
 app.use('/users', require('./routes/users.js'));
 app.use('/orders', require('./routes/orders.js'));
+app.use('/reviews', require('./routes/reviews.js'));
 
 app.use(typeError)
 
@@ -23,3 +24,5 @@ app.listen(PORT, () => console.log('Listening  on port : ' + PORT))
 //sequelize seed:generate --name demo-product
 //sequelize migration:create --name updatesInUserTable
 //npm i multer 
+//sequelize migration:create --name updatesInProductsTable
+//sequelize model:generate --name Review --attributes review:string,ProductId:integer,UserId:integer

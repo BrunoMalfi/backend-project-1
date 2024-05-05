@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         through:models.CategoryProduct,
       }),
       Product.belongsToMany(models.Order,{through:models.OrderProduct})
+      Product.hasMany(models.Review)
     }
   }
   Product.init({
