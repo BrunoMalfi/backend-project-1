@@ -1,4 +1,4 @@
-const { Product,Sequelize, Category} = require('../models/index.js');
+const { Product,Sequelize, Category,Review} = require('../models/index.js');
 const { Op } = Sequelize;
 
 const ProductController = {
@@ -36,7 +36,8 @@ const ProductController = {
     },
     showAllItems(req,res){
         const products = Product.findAll({
-            include: [{ model: Category,attributes:["name"], through: { attributes: [] } }],
+            include: [{ model: Category,attributes:["name"], through: { attributes: [] } },
+                      { model: Review}],
           })
           .then(products => res.status(201).send({ message: 'Items :  ', products }))
           .catch(err =>console.error(err))
@@ -44,7 +45,8 @@ const ProductController = {
     },
     getItemById(req,res){
         Product.findByPk(req.params.id,
-        {include: [{ model: Category,attributes:["name"], through: { attributes: [] } }]})
+        {include: [{ model: Category,attributes:["name"], through: { attributes: [] } },
+                    { model: Review}]})
         .then(product => res.status(201).send({ message: 'Item :  ', product }))
         .catch(err =>console.error(err))
     },

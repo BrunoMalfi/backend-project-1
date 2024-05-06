@@ -16,6 +16,39 @@ const ReviewController={
             .then(review => res.status(201).send({ message: 'Successful review updated ', review }))
             .catch(err =>console.error(err))
     },
+    delete(req, res) {
+        Review.findByPk(req.params.id).then(review=>{
+            Review.destroy({
+                where: {
+                    id: req.params.id
+                }
+            }).then(() => res.status(201).send({ message: 'Deleted review with id ', review}))
+              .catch(err =>console.error(err))
+        })
+        .catch(err =>console.error(err))
+    },
+    showAllReviews(req,res){
+        Review.findAll()
+        .then(reviews => res.status(201).send({ message: 'All reviews ', reviews}) )
+        .catch(err =>console.error(err))
+    },
+    showReviewById(req, res){
+        Review.findByPk(req.params.id
+            ,{include: [{model : User,attributes:["id","name","eMail"]},
+            {model : Product,attributes:["item_number","item_description","price","id"]}]}
+        )
+        .then(review => res.status(201).send({ message: 'Review ', review}) )
+        .catch(err =>console.error(err))
+    },
+    showReviewsByItemId(req,res){
+        Review.findAll({
+            where: {
+                ProductId: req.params.id
+            }            
+        })
+        .then(reviews => res.status(201).send({ message: 'Reviews ', reviews}) )
+        .catch(err =>console.error(err))
+    }
 }
 
 module.exports = ReviewController
