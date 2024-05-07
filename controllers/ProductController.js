@@ -6,6 +6,7 @@ const ProductController = {
         const file = req.file != undefined ? req.file: {path:"no image loaded"};
         Product.create({...req.body,image_path:file.path})
             .then(product => {
+                console.log(req.body)
                 product.addCategory(req.body.CategoryId)
                 res.status(201).send({ message: 'Successful product created ', product ,file })
             })
@@ -25,12 +26,17 @@ const ProductController = {
             .catch(err =>console.error(err))
     },
     delete(req, res) {
-        Product.destroy({
-            where: {
-                id: req.params.id
-            }
-        }).then(product => res.status(201).send({ message: 'Deleted item with id ', product}))
-          .catch(err =>console.error(err))
+        Product.findByPk(req.params.id)
+        .then( product =>{
+            Product.destroy({
+                where: {
+                    id: req.params.id
+                }
+            }).then(() => res.status(201).send({ message: 'Deleted item:  ', product}))
+              .catch(err =>console.error(err))
+        })
+        .catch(err =>console.error(err))
+        
     },
     showAllItems(req,res){
         const products = Product.findAll({

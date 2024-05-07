@@ -8,14 +8,24 @@ const CategoryController = {
             .catch(err =>console.error(err))
     },
     update(req,res){
-        Category.update(req.body,
-            {
-                where: {
-                    id: req.params.id
-                }
-            })
-            .then(category => res.status(201).send({ message: 'Successful category updated ', category }))
-            .catch(err =>console.error(err))
+        Category.findByPk(req.params.id)
+        .then(oldCategory =>{
+            Category.update(req.body,
+                {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(() =>{
+                    Category.findByPk(req.params.id).then(newCategory=>{
+                        res.status(201).send({ message: 'Successful category updated ', oldCategory,newCategory })
+
+                    }).catch(err =>console.error(err))
+                })
+                .catch(err =>console.error(err))
+        })
+        .catch(err =>console.error(err))
+        
 
     },
     delete(req, res) {
