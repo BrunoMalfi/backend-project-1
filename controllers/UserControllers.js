@@ -13,10 +13,10 @@ const UserController = {
             .then(user => res.status(201).send({ message: 'Successful user created ', user }))
             .catch(err =>{
                 console.error(err)
-                next(err)
+                next(err);
             })
     },
-    login(req,res){
+    login(req,res, next){
         User.findOne({
             where:{
                 email:req.body.eMail
@@ -33,16 +33,22 @@ const UserController = {
  			Token.create({ token, UserId: user.id });
             res.send({ message: 'Bienvenid@ ' + user.name, user, token });
         })
-        .catch(err =>console.error(err))
+        .catch(err =>{
+            console.error(err)
+            next(err);
+        })
     },
-    getUserOrders(req,res){
+    getUserOrders(req,res,next){
         User.findByPk(req.params.id
             ,{include: [{model : Order,
                         include: [{ model: Product, through: { attributes: [] } }]
             }]}
         )
             .then(user => res.status(201).send({ message: 'User :  ', user }))
-            .catch(err =>console.error(err))
+            .catch(err =>{
+                console.error(err)
+                next(err);
+            })
     },
     logout(req, res) {
         Token.destroy({

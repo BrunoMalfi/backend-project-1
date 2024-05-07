@@ -1,4 +1,4 @@
-const { Order,Product,Sequelize} = require('../models/index.js');
+const { Order,Product,User,Sequelize} = require('../models/index.js');
 const { Op } = Sequelize;
 
 const OrderController = {
@@ -12,7 +12,8 @@ const OrderController = {
     },
     showAllOrders(req,res){
         const orders = Order.findAll({
-            include: [{ model: Product, through: { attributes: [] } }],
+            include: [{ model: Product, through: { attributes: [] } },
+                      { model: User, attributes:["id","name","eMail"]}],
           })
           .then(orders => res.status(201).send({ message: 'Orders :  ', orders }))
           .catch(err =>console.error(err))

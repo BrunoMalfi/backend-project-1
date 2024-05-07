@@ -18,9 +18,45 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    item_description: DataTypes.STRING,
-    price: DataTypes.DOUBLE,
-    item_number: DataTypes.STRING,
+    item_description:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Item description field is mandatory",
+        },
+        notEmpty:{
+          msg: "Please fulfil the Item description field, it can't be empty",
+        }
+      },
+    },
+    price: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Price field is mandatory",
+        },
+        isNumeric:{
+          msg: "Price must be a numeric value"
+        },
+        notEmpty:{
+          msg: "Please fulfil the price field, it can't be empty",
+        }
+      },
+    },
+    item_number: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Item description field is mandatory",
+        },
+        notEmpty:{
+          msg: "Please fulfil the Item description field, it can't be empty",
+        }
+      },
+    },
     image_path: DataTypes.STRING
   }, {
     sequelize,

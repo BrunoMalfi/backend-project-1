@@ -2,19 +2,17 @@ const { Product,Sequelize, Category,Review} = require('../models/index.js');
 const { Op } = Sequelize;
 
 const ProductController = {
-    create(req, res) {
-        const file = req.file; 
-        //TODO : check if there's better solution about this . 
-        if(req.body.body != undefined ){
-            console.log(JSON.parse(req.body.body))
-            req.body = JSON.parse(req.body.body)
-        }
+    create(req, res, next) {
+        const file = req.file != undefined ? req.file: {path:"no image loaded"};
         Product.create({...req.body,image_path:file.path})
             .then(product => {
                 product.addCategory(req.body.CategoryId)
                 res.status(201).send({ message: 'Successful product created ', product ,file })
             })
-            .catch(err =>console.error(err))
+            .catch(err =>{
+                console.error(err)
+                next(err);
+            })
     },
     update(req,res){
         Product.update(req.body,
