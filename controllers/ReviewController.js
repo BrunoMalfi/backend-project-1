@@ -7,14 +7,19 @@ const ReviewController={
         .catch(err =>console.error(err))
     },
     update(req,res){
-        Review.update(req.body,
-            {
-                where: {
-                    id: req.body.id
-                }
-            })
-            .then(review => res.status(201).send({ message: 'Successful review updated ', review }))
-            .catch(err =>console.error(err))
+        Review.findByPk(req.body.id).then(oldReview=>{
+            Review.update(req.body,
+                {
+                    where: {
+                        id: req.body.id
+                    }
+                })
+                .then(() => {
+                    Review.findByPk(req.body.id).then(newReview=>{
+                        res.status(201).send({ message: 'Successful review updated ', oldReview, newReview })
+                    }).catch(err =>console.error(err))
+                }).catch(err =>console.error(err))
+            }).catch(err =>console.error(err))
     },
     delete(req, res) {
         Review.findByPk(req.params.id).then(review=>{

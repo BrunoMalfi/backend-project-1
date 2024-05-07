@@ -46,7 +46,7 @@ const CategoryController = {
     },
     showAllCategories(req,res){
         const categories = Category.findAll({
-            include: [{ model: Product,through: { attributes: [] } }],
+            include: [{ model: Product,attributes:["id","item_number","item_description","price"],through: { attributes: [] } }],
           })
           .then(categories => res.status(201).send({ message: 'Categories :  ', categories }))
           .catch(err =>console.error(err))

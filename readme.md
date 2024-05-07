@@ -16,15 +16,32 @@ This is a Node Js backend project for handeling a online shop.
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
-
 ## Installation
 
 Download the repository, install the dependencies with npm.
+
+1. Clone the repository:
+
+    git clone https://github.com/BrunoMalfi/backend-project-1 
+
+2. Navigate to the project directory
+
+    cd projectname
+3. Install dependencies:
+
+    npm install
+    
+4. Set up environment variables in config.example.json
+
+5. start server with npm start or npm run dev to run it with nodemon
+
 ## Api documentation
 [End point documentation ](https://documenter.getpostman.com/view/34760486/2sA3JJ9hxn#5eb4683a-7ec0-41f2-8e8a-2cae8583e285)
     
 ## Data Base structure
 ![foto](./img/tables.png)
+
+##
 
 ## File structure
 ### Models
